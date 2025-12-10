@@ -2,23 +2,19 @@ import logging
 import os
 from datetime import datetime
 
-# Always create logs INSIDE src folder
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-LOG_DIR = os.path.join(BASE_DIR, "logs")
+# Create logs folder at project root
+LOGS_DIR = os.path.join(os.getcwd(), "logs")
+os.makedirs(LOGS_DIR, exist_ok=True)
 
-os.makedirs(LOG_DIR, exist_ok=True)
+LOG_FILE = f"{datetime.now().strftime('%Y_%m_%d_%H_%M_%S')}.log"
+LOG_FILE_PATH = os.path.join(LOGS_DIR, LOG_FILE)
 
-LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
-LOG_FILE_PATH = os.path.join(LOG_DIR, LOG_FILE)
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    level=logging.INFO,
+    format="[%(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s"
+)
 
-def setup_logger():
-    print("LOG FILE PATH:", LOG_FILE_PATH)  # MUST PRINT HERE
+logger = logging.getLogger(__name__)
 
-    logging.basicConfig(
-        filename=LOG_FILE_PATH,
-        format="[%(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s",
-        level=logging.INFO,
-    )
-
- 
-
+print(f"LOG FILE CREATED AT: {LOG_FILE_PATH}")
