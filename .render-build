@@ -1,2 +1,4 @@
-PYTHON_VERSION=3.10.14
+[build]
+pythonVersion = "3.10.14"
+
 
